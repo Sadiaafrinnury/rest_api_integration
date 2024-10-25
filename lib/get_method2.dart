@@ -37,7 +37,7 @@ class _GetMethod2State extends State<GetMethod2> {
         centerTitle: true,
         backgroundColor: Colors.blue,
         title: Text(
-          "Example two",
+          "Example Two",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -51,19 +51,50 @@ class _GetMethod2State extends State<GetMethod2> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text('No photos found'));
           } else {
-            return Card(
-              elevation: 2,
-              child: ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  final photo = snapshot.data![index];
-                  return ListTile(
-                    leading: Image.network(photo.thumbnailUrl),
-                    title: Text(photo.title),
-                    subtitle: Text('ID: ${photo.id}'),
-                  );
-                },
-              ),
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final photo = snapshot.data![index];
+                return Card(
+                  margin: EdgeInsets.all(10), // Add some margin around the card
+                  elevation: 5, // Elevation for shadow effect
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0), // Padding inside the card
+                    child: Row(
+                      children: [
+                        Image.network(
+                          photo.thumbnailUrl,
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(width: 10), // Space between image and text
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                photo.title,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxLines: 2, // Limit title to 2 lines
+                                overflow: TextOverflow.ellipsis, // Ellipsis for overflow
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'ID: ${photo.id}',
+                                style: TextStyle(color: Colors.grey[600]),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             );
           }
         },
@@ -71,6 +102,7 @@ class _GetMethod2State extends State<GetMethod2> {
     );
   }
 }
+
 
 
 
